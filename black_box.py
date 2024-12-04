@@ -14,6 +14,7 @@ def black_box(DA, SB, C, delta, device, ymax):
 				C_comp[i][j]=C[i][j]
 				print("good",i," ",j)
 	C_tensor = torch.tensor([C_comp], device=device, requires_grad=False)
+	print("success")
 	Mb, yA, yB, ot_pyt_loss, iteration = transport_pure_gpu(DA, SB, C_tensor, delta, device=device)
 	for i in range(rows):
 		for j in range(cols): 
