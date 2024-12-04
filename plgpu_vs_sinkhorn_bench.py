@@ -10,6 +10,7 @@ import ot
 import os
 import time
 
+from black_box import black_box as bb_pure_gpu
 from transport import transport_torch as transport_pure_gpu
 from matching import matching_torch_v1 as matching_pure_gpu
 from search_parameter import get_sinkorn_reg
@@ -83,7 +84,8 @@ for delta in delta_tryouts:
             if is_transport:
                 torch.cuda.synchronize()
                 start = time.perf_counter()
-                Mb, yA, yB, ot_pyt_loss, iteration = transport_pure_gpu(DA_tensor, SB_tensor, cost_tensor, delta_tensor, device=device)
+                Mb, yA, yB, ot_pyt_loss, iteration = bb_pure_gpu(DA_tensor, SB_tensor, cost_tensor, delta_tensor, device=device,1)
+                #Mb, yA, yB, ot_pyt_loss, iteration = transport_pure_gpu(DA_tensor, SB_tensor, cost_tensor, delta_tensor, device=device)
                 end = time.perf_counter()
             else:
                 torch.cuda.synchronize()
