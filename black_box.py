@@ -2,7 +2,7 @@ import numpy as np
 import torch
 from transport import transport_torch as transport_pure_gpu
 def black_box(DA, SB, C, delta, device, ymax):
-	rows = len(C) 
+	"""rows = len(C) 
 	cols = len(C[0])
 	C_comp = [[0 for i in range(cols)] for j in range(rows)]
 	for i in range(rows):
@@ -12,7 +12,13 @@ def black_box(DA, SB, C, delta, device, ymax):
 				print("bad")
 			else:
 				C_comp[i][j]=C[i][j]
-				print("good",i," ",j)
+				print("good",i," ",j)"""
+	mask = C < ymax
+	mask2 = C>= ymax
+	size=C.size()
+	identity_tensor = torch.full(size[0],ymax])
+	C_comp = C[mask]
+	C_comp=C_comp.add(identity_tensor[mask2])
 	C_tensor = torch.tensor([C_comp], device=device, requires_grad=False)
 	print("success")
 	Mb, yA, yB, ot_pyt_loss, iteration = transport_pure_gpu(DA, SB, C_tensor, delta, device=device)
