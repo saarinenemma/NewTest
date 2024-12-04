@@ -67,8 +67,8 @@ for delta in delta_tryouts:
         start = time.time()
         ot_loss_emd = ot.emd2(SB, DA, cost, processes=1, numItermax=100000000)
         end = time.time()
-        emd_time.append(end-start)
-        emd_loss.append(ot_loss_emd)
+        emd_time.concat(end-start)
+        emd_loss.concat(ot_loss_emd)
 
         ######test on gpu###########
 
@@ -92,9 +92,9 @@ for delta in delta_tryouts:
                 end = time.perf_counter()
                 ot_pyt_loss = ot_pyt_loss/n
             print("pl takes time = {}s".format(end-start))
-            pl_gpu_time.append(end-start)
-            pl_gpu_loss.append(ot_pyt_loss.cpu().numpy())
-            pl_gpu_iter.append(iteration)
+            pl_gpu_time.concat(end-start)
+            pl_gpu_loss.concat(ot_pyt_loss.cpu().numpy())
+            pl_gpu_iter.concat(iteration)
 
         reg = get_sinkorn_reg(SB_tensor, DA_tensor, cost_tensor, ot_pyt_loss, d = 1e-5, show_sinkh_time = True)
         print("reg choose = {}".format(reg))
@@ -107,9 +107,9 @@ for delta in delta_tryouts:
         start = time.perf_counter()
         ot_pal_loss_sinkhorn = ot.sinkhorn2(SB_tensor_, DA_tensor_, cost_tensor_, reg, method='sinkhorn', numItermax=100000000)
         end = time.perf_counter()
-        sink_gpu_time.append(end-start)
-        sink_gpu_loss.append(ot_pal_loss_sinkhorn.cpu().numpy())
-        sink_reg_choose.append(reg)
+        sink_gpu_time.concat(end-start)
+        sink_gpu_loss.concat(ot_pal_loss_sinkhorn.cpu().numpy())
+        sink_reg_choose.concat(reg)
 
     print("synthetic data (OT)")
     print("problem size {} * {}".format(len(DA), len(SB)))
@@ -122,6 +122,6 @@ for delta in delta_tryouts:
 
     cur_bench_summary_mean = pd.Series([delta, np.mean(sink_reg_choose), np.mean(emd_time), np.mean(sink_gpu_time), np.mean(pl_gpu_time), np.mean(emd_loss), np.mean(sink_gpu_loss), np.mean(pl_gpu_loss), np.mean(pl_gpu_iter)], index=col)
     cur_bench_suuumary_std = pd.Series([delta, np.std(sink_reg_choose), np.std(emd_time), np.std(sink_gpu_time), np.std(pl_gpu_time), np.std(emd_loss), np.std(sink_gpu_loss), np.std(pl_gpu_loss), np.std(pl_gpu_iter)], index=col)
-    bench_df = bench_df.append(cur_bench_summary_mean, ignore_index=True)
-    bench_df = bench_df.append(cur_bench_suuumary_std, ignore_index=True)
+    bench_df = bench_df.concat(cur_bench_summary_mean, ignore_index=True)
+    bench_df = bench_df.concat(cur_bench_suuumary_std, ignore_index=True)
     bench_df.to_csv('pl_vs_sink_bench_results_{}_{}.csv'.format(dataset_name, nlp_name), index=False)
