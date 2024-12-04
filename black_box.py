@@ -19,7 +19,7 @@ def black_box(DA, SB, C, delta, device, ymax):
 	identity_tensor = torch.full(size,ymax)
 	C_comp = C[mask]
 	C_comp=C_comp.add(C[mask2])
-	C_tensor = torch.tensor([C_comp], device=device, requires_grad=False)
+	C_tensor = torch.tensor(C_comp, device=device, requires_grad=False)
 	print("success")
 	Mb, yA, yB, ot_pyt_loss, iteration = transport_pure_gpu(DA, SB, C_tensor, delta, device=device)
 	for i in range(rows):
