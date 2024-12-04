@@ -67,8 +67,8 @@ for delta in delta_tryouts:
         start = time.time()
         ot_loss_emd = ot.emd2(SB, DA, cost, processes=1, numItermax=100000000)
         end = time.time()
-        emd_time.concat(end-start)
-        emd_loss.concat(ot_loss_emd)
+        emd_time.append(end-start)
+        emd_loss.append(ot_loss_emd)
 
         ######test on gpu###########
 
@@ -92,9 +92,9 @@ for delta in delta_tryouts:
                 end = time.perf_counter()
                 ot_pyt_loss = ot_pyt_loss/n
             print("pl takes time = {}s".format(end-start))
-            pl_gpu_time.concat(end-start)
-            pl_gpu_loss.concat(ot_pyt_loss.cpu().numpy())
-            pl_gpu_iter.concat(iteration)
+            pl_gpu_time.append(end-start)
+            pl_gpu_loss.append(ot_pyt_loss.cpu().numpy())
+            pl_gpu_iter.append(iteration)
 
         reg = get_sinkorn_reg(SB_tensor, DA_tensor, cost_tensor, ot_pyt_loss, d = 1e-5, show_sinkh_time = True)
         print("reg choose = {}".format(reg))
@@ -107,9 +107,9 @@ for delta in delta_tryouts:
         start = time.perf_counter()
         ot_pal_loss_sinkhorn = ot.sinkhorn2(SB_tensor_, DA_tensor_, cost_tensor_, reg, method='sinkhorn', numItermax=100000000)
         end = time.perf_counter()
-        sink_gpu_time.concat(end-start)
-        sink_gpu_loss.concat(ot_pal_loss_sinkhorn.cpu().numpy())
-        sink_reg_choose.concat(reg)
+        sink_gpu_time.append(end-start)
+        sink_gpu_loss.append(ot_pal_loss_sinkhorn.cpu().numpy())
+        sink_reg_choose.append(reg)
 
     print("synthetic data (OT)")
     print("problem size {} * {}".format(len(DA), len(SB)))
