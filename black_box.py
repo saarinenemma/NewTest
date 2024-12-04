@@ -16,7 +16,7 @@ def black_box(DA, SB, C, delta, device, ymax):
 	mask = C < ymax
 	mask2 = C>= ymax
 	size=C.size()
-	identity_tensor = torch.full(size[0],ymax])
+	identity_tensor = torch.full(size[0],ymax)
 	C_comp = C[mask]
 	C_comp=C_comp.add(identity_tensor[mask2])
 	C_tensor = torch.tensor([C_comp], device=device, requires_grad=False)
