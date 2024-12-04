@@ -122,6 +122,6 @@ for delta in delta_tryouts:
 
     cur_bench_summary_mean = pd.Series([delta, np.mean(sink_reg_choose), np.mean(emd_time), np.mean(sink_gpu_time), np.mean(pl_gpu_time), np.mean(emd_loss), np.mean(sink_gpu_loss), np.mean(pl_gpu_loss), np.mean(pl_gpu_iter)], index=col)
     cur_bench_suuumary_std = pd.Series([delta, np.std(sink_reg_choose), np.std(emd_time), np.std(sink_gpu_time), np.std(pl_gpu_time), np.std(emd_loss), np.std(sink_gpu_loss), np.std(pl_gpu_loss), np.std(pl_gpu_iter)], index=col)
-    bench_df = bench_df.concat(cur_bench_summary_mean, ignore_index=True)
-    bench_df = bench_df.concat(cur_bench_suuumary_std, ignore_index=True)
+    bench_df = pd.concat([bench_df,cur_bench_summary_mean], ignore_index=True)
+    bench_df = pd.concat([bench_df,cur_bench_suuumary_std], ignore_index=True)
     bench_df.to_csv('pl_vs_sink_bench_results_{}_{}.csv'.format(dataset_name, nlp_name), index=False)
