@@ -11,7 +11,7 @@ def black_box(DA, SB, C, delta, device, ymax):
 				print("bad")
 			else:
 				C_comp[i][j]=C[i][j]
-				print("good")
+				print("good"+i+" "+j)
 	Mb, yA, yB, ot_pyt_loss, iteration = transport_pure_gpu(DA, SB, C_comp, delta, device=device)
 	for i in range(rows):
 		for j in range(cols): 
