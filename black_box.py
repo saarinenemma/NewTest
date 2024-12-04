@@ -13,7 +13,7 @@ def black_box(DA, SB, C, delta, device, ymax):
 	for i in range(rows):
 		for j in range(cols): 
 			if C[i][j]>=ymax :
-				ot_pyt_loss -= """Mb[i][j]*"""ymax
+				ot_pyt_loss -= ymax #"""Mb[i][j]*"""
 				Mb[i][j]=0
 	return Mb, yA, yB, ot_pyt_loss, iteration
 def RPW_approx(DA, SB, C, delta, p, device):
