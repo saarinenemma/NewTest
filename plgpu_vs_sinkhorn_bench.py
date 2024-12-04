@@ -85,9 +85,9 @@ for delta in delta_tryouts:
             if is_transport:
                 torch.cuda.synchronize()
                 start = time.perf_counter()
-                #Mb, yA, yB, ot_pyt_loss, iteration = bb_pure_gpu(DA_tensor, SB_tensor, cost_tensor, delta_tensor, device=device, ymax=.01)
+                Mb, yA, yB, ot_pyt_loss, iteration = bb_pure_gpu(DA_tensor, SB_tensor, cost_tensor, delta_tensor, device=device, ymax=.7)
                 #Mb, yA, yB, ot_pyt_loss, iteration = transport_pure_gpu(DA_tensor, SB_tensor, cost_tensor, delta_tensor, device=device)
-                Mb, yA, yB, ot_pyt_loss, iteration = RPW(DA_tensor, SB_tensor, cost_tensor, delta_tensor, 2, device=device)
+                #Mb, yA, yB, ot_pyt_loss, iteration = RPW(DA_tensor, SB_tensor, cost_tensor, delta_tensor, 2, device=device)
                 end = time.perf_counter()
             else:
                 torch.cuda.synchronize()
