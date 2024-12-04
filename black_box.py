@@ -21,7 +21,8 @@ def black_box(DA, SB, C, delta, device, ymax):
 	size=C.size()
 	C_temp= torch.full(size,ymax)
 	C_comp = C[mask]
-	C_comp=C_comp.add(C_temp[mask2])
+	C_temp=C_temp[mask2]
+	C_comp=C_comp.add(C_temp)
 	print(C_comp)
 	C_tensor = torch.tensor(C_comp, device=device, requires_grad=False)
 	print("success")
