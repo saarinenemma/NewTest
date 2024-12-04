@@ -20,7 +20,7 @@ def black_box(DA, SB, C, delta, device, ymax):
 	#mask2 = C_temp>= ymax
 	#size=C.size()
 	
-	C_comp = C[mask]
+	#C_comp = C[mask]
 	print("test", C)
 	#C_temp=C_temp[mask2]
 	C_comp=C_comp.add(C_temp)
