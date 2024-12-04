@@ -1,4 +1,5 @@
 import numpy as np
+import torch
 from transport import transport_torch as transport_pure_gpu
 def black_box(DA, SB, C, delta, device, ymax):
 	rows = len(C) 
@@ -12,7 +13,8 @@ def black_box(DA, SB, C, delta, device, ymax):
 			else:
 				C_comp[i][j]=C[i][j]
 				print("good",i," ",j)
-	Mb, yA, yB, ot_pyt_loss, iteration = transport_pure_gpu(DA, SB, C_comp, delta, device=device)
+	C_tensor = torch.tensor([C_comp], device=device, requires_grad=False)
+	Mb, yA, yB, ot_pyt_loss, iteration = transport_pure_gpu(DA, SB, C_tensor, delta, device=device)
 	for i in range(rows):
 		for j in range(cols): 
 			if C[i][j]>=ymax :
