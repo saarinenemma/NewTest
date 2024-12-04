@@ -20,12 +20,12 @@ def RPW_approx(DA, SB, C, delta, p, device):
 	low=0
 	high=1
 	while low<=(high):
-		Fi_est=(high+low)//2
+		Fi_est=(high+low)/2
 	
 		C_scale=C.clone()
 		C_scale=C_scale.pow(p)
 		C_scale=C_scale*Fi_est
-		ymax=min(1,(Fi_est**p)/delta)
+		ymax=min(1,(Fi_est**p)/delta[0])
 		print("ymax ",ymax)
 		Mb, yA, yB, ot_pyt_loss, iteration=black_box(DA, SB, C_scale, delta, device=device, ymax=ymax)
 		p_root=1/p
