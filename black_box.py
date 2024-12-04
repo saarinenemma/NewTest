@@ -2,9 +2,9 @@ import numpy as np
 import torch
 from transport import transport_torch as transport_pure_gpu
 def black_box(DA, SB, C, delta, device, ymax):
-	"""rows = len(C) 
+	rows = len(C) 
 	cols = len(C[0])
-	C_comp = [[0 for i in range(cols)] for j in range(rows)]
+	"""C_comp = [[0 for i in range(cols)] for j in range(rows)]
 	for i in range(rows):
 		for j in range(cols): 
 			if C[i][j]>=ymax or C[i][j]==0:
